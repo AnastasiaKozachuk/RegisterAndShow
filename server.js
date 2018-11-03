@@ -27,7 +27,7 @@ var schema=	new	mongoose.Schema({
 
 var User = mongoose.model('User',schema);
 
-server.get('/', function(req, res){
+server.get('/findAll', function(req, res){
     User.find(function (err, allUsers) {
         if(err){
             res.send("No Users in DB");
@@ -35,8 +35,6 @@ server.get('/', function(req, res){
             res.send(allUsers);
         }
     });
-    res.sendFile(__dirname+"/index.html");
-
 });
 
 
@@ -47,7 +45,7 @@ server.post('/saveUser', function(req, res){
 
     var newUser = new User({
         login:user_info.login,
-        password:user_info.password[0],
+        password:user_info.password,
         email:user_info.email
     });
 
@@ -56,13 +54,7 @@ server.post('/saveUser', function(req, res){
             console.log("Something goes wrong with User" + newUs.login);
         }
 
-        User.find(function (err, allUsers) {
-            if(err){
-                res.send("No Users in DB");
-            }else{
-                res.send(allUsers);
-            }
-        });
-
+        res.send("Ok");
     });
+
 })
